@@ -12,7 +12,7 @@ def home(request):
 
 
 def recipe(request, id):
-    recipe = Recipe.objects.get(pk=id)
+    recipe = Recipe.objects.get(pk=id, is_published=True)
 
     return render(request, 'recipes/pages/recipe-view.html', context={
         'recipe': recipe,
