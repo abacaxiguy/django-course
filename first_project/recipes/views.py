@@ -1,5 +1,4 @@
-from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import get_list_or_404, render
 
 from recipes.models import Recipe
 
@@ -22,12 +21,14 @@ def recipe(request, id):
 
 
 def category(request, category_id):
-    recipes = Recipe.objects.filter(
-        category__id=category_id, is_published=True).order_by('-id')
-
-    if not recipes:
-        raise Http404('No recipes found for this category')
+    recipes = get_list_or_404(
+        Recipe.objects.filter(
+            is_published=True,
+            category_id=category_id
+        ).order_by('-id')
+    )
 
     return render(request, 'recipes/pages/category.html', context={
-        'recipes': recipes
+        'recipes': recipes,
+        'title': recipes[0].category.name
     })
