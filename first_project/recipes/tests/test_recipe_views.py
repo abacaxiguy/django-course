@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import resolve, reverse
 
 from recipes import views
+from recipes.models import Category, Recipe, User
 
 
 class RecipeViewsTest(TestCase):
@@ -20,6 +21,34 @@ class RecipeViewsTest(TestCase):
     def test_recipe_home_template_shows_no_recipes_found_if_no_recipes(self):
         response = self.client.get(reverse('recipes:home'))
         self.assertIn('No recipes found', response.content.decode('utf-8'))
+
+    def test_recipe_home_template_loads_recipes(self):
+        category = Category.objects.create(name="Test Category")
+
+        author = User.objects.create_user(
+            first_name="Test",
+            last_name="User",
+            username="testuser",
+            password="123456",
+            email="username@email.com",
+        )
+
+        recipe = Recipe.objects.create(
+            category=category,
+            author=author,
+            title="Test Recipe",
+            description="Test Description",
+            slug="test-recipe",
+            preparation_time=10,
+            preparation_time_unit="minutes",
+            servings=2,
+            servings_unit="people",
+            preparation_steps="Test Preparation Steps",
+            preparation_steps_is_html=False,
+            is_published=True,
+        )
+
+        print(recipe)
 
     def test_recipe_category_view_function_is_correct(self):
         view = resolve(
