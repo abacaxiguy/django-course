@@ -33,7 +33,7 @@ class RecipeViewsTest(TestCase):
             email="username@email.com",
         )
 
-        recipe = Recipe.objects.create(
+        Recipe.objects.create(
             category=category,
             author=author,
             title="Test Recipe",
@@ -46,9 +46,17 @@ class RecipeViewsTest(TestCase):
             preparation_steps="Test Preparation Steps",
             preparation_steps_is_html=False,
             is_published=True,
+            cover="test.jpg",
         )
 
-        print(recipe)
+        response = self.client.get(reverse('recipes:home'))
+        response_recipes = response.context['recipes']
+        content = response.content.decode('utf-8')
+
+        self.assertIn('Test Recipe', content)
+        self.assertIn('10 minutes', content)
+        self.assertIn('2 people', content)
+        self.assertEqual(len(response_recipes), 1)
 
     def test_recipe_category_view_function_is_correct(self):
         view = resolve(
