@@ -14,14 +14,14 @@ def make_recipe():
     width, height = rand_ratio()
 
     return {
-        "id": randint(1, 100),
-        "title": fake.sentence(nb_words=6),
+        # "id": randint(1, 100),
+        # "title": fake.sentence(nb_words=6),
         "description": fake.sentence(nb_words=12),
         "preparation_time": fake.random_number(digits=2, fix_len=True),
         "preparation_time_unit": 'Minutos',
         "servings": fake.random_number(digits=2, fix_len=True),
         "servings_unit": 'Porções',
-        "preparation_steps": fake.text(3000),
+        # "preparation_steps": fake.text(3000),
         "created_at": fake.date_time_this_year(),
         "author": {
             "first_name": fake.first_name(),
@@ -37,5 +37,6 @@ def make_recipe():
 
 
 if __name__ == '__main__':
-    from pprint import pprint
-    pprint(make_recipe())
+    # from pprint import pprint
+    # pprint(make_recipe())
+    print(fake.sentence(nb_words=12))
