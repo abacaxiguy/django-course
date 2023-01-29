@@ -32,3 +32,7 @@ def category(request, category_id):
         'recipes': recipes,
         'title': recipes[0].category.name
     })
+
+
+def search(request):
+    ...

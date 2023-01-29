@@ -48,9 +48,7 @@ class RecipeViewsTest(RecipeTestBase):
         self.assertEqual(len(response_recipes), 0)
 
     def test_recipe_category_view_function_is_correct(self):
-        view = resolve(
-            reverse('recipes:category', kwargs={"category_id": 1})
-        )
+        view = resolve(reverse('recipes:category', kwargs={"category_id": 1}))
         self.assertIs(view.func, views.category)
 
     def test_recipe_category_view_returns_status_404_if_no_recipes_found(self):
@@ -80,9 +78,7 @@ class RecipeViewsTest(RecipeTestBase):
         self.assertEqual(response.status_code, 404)
 
     def test_recipe_detail_view_function_is_correct(self):
-        view = resolve(
-            reverse('recipes:recipe', kwargs={"id": 1})
-        )
+        view = resolve(reverse('recipes:recipe', kwargs={"id": 1}))
         self.assertIs(view.func, views.recipe)
 
     def test_recipe_detail_view_returns_status_404_if_no_recipes_found(self):
@@ -108,3 +104,8 @@ class RecipeViewsTest(RecipeTestBase):
             reverse('recipes:recipe', kwargs={"id": recipe.id}))
 
         self.assertEqual(response.status_code, 404)
+
+    def test_recipe_search_view_function_is_correct(self):
+        view = resolve(reverse('recipes:search'))
+
+        self.assertIs(view.func, views.search)
